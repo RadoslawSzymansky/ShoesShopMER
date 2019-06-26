@@ -1,0 +1,11 @@
+----------- TWORZYĆ BRANCHE !!! ------- i kazdego dnia rebase 
+1.stworzyc strukture expressa, routery, midlewary
+2. instalacje express, mongoose, config
+3. stworzyć kolekcje i modele dla users i products
+4. Używać postmana.
+5. Autoryzacja, zanim zacznę kupowanie itp; Sprawdzić tez to co napisał mentor cos o cookie i artykul
+6. Obsługa błędow. Middlewar do tego. next(error)
+7. Stworzyć endpointy. Odrazu z obsluga błedów.
+8. Autoryzacja google razem z tworzeniem konta? 
+9. Endpointyn na zakup, dodanie do ulubionych. Dodanie do koszyka
+10. Zapisywanie koszyka i ulubionych w cookies. 
