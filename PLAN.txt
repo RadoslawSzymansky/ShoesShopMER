@@ -9,3 +9,4 @@
 8. Autoryzacja google razem z tworzeniem konta? 
 9. Endpointyn na zakup, dodanie do ulubionych. Dodanie do koszyka
 10. Zapisywanie koszyka i ulubionych w cookies. 
+11. plan state
