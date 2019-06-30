@@ -6,8 +6,8 @@ const cookieParser = require('cookie-parser');
 
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
+const loginRouter = require('./routes/login');
 
-//middlewars
 const errorHandler = require('./middlewars/errorHandler')
 
 const app = express();
@@ -22,8 +22,9 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('Połaczone z mongo DB!');
-});
+}); 
 
+app.use('/', loginRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/users', usersRouter);
 
