@@ -18,4 +18,22 @@ router.post('/add', (req, res, next) => {
 
 });
 
+router.get('/', (req, res, next) => {
+  User.find({}, 'name', (err, users) => {
+    if (err) return next(err);
+    res.send(users);
+  });
+});
+
+// tutaj wrzucic middlewar autoryzujący!
+// oraz pobrac tylko to co trzeba, orazu. Koszyk. Ulubione.
+// Hasla nie pokazywac. Zrobic nowy path do pobierania historii pkupowanyche
+router.get('/:id', (req, res, next) => {
+  const { id } = req.params;
+  User.find({_id: id}, (err, users) => {
+    if (err) return next(err);
+    res.send(users);
+  });
+});
+
 module.exports = router;
