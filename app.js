@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
+const userRouter = require('./routes/user');
 
 const errorHandler = require('./middlewars/errorHandler')
 
@@ -16,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-mongoose.connect(config.db, { useNewUrlParser: true });
+mongoose.connect(config.db, { useNewUrlParser: true, useCreateIndex: true });
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -27,7 +28,7 @@ db.once('open', function () {
 app.use('/', loginRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/users', usersRouter);
-
+app.use('/', userRouter)
 app.use(errorHandler);
 
 if (process.env.NODE_ENV === 'production') {
