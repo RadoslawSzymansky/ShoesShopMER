@@ -57,7 +57,7 @@ router.put('/shoes/:id', (req, res, next) => {
     
     if (!isSizeAvaible) return res.status(400).json({errMsg: 'Size is not avaible'});
 
-    if (count > inStore){ 
+    if (count > inStore || count === 0){ 
       res.status(400).json({ errMsg: 'Not enought products is store.' });
       return;
     };
@@ -67,12 +67,24 @@ router.put('/shoes/:id', (req, res, next) => {
 
     product.save()
       .then(updatedProduct => {
-        res.json(updatedProduct);
+        // res.json({updatedProduct, size, count});
+        const productToSend = encodeURIComponent(updatedProduct);
+
+        res.redirect(`${id}/success?data=${productToSend}&size=${size}&count=${count}`);
+          // czy tu zrobić redirect?? 
+
       }) 
       .catch(err => next(err));
-
+      
   });
-
 });
+
+router.all('/shoes/:id/success', (req, res, all) => {
+  const { data, size, count } = req.query;
+
+  const updatedProduct = decodeURIComponent(data)
+  console.log(updatedProduct)
+  res.json({ updatedProduct, size, count });
+})
 
 module.exports = router;
