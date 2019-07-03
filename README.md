@@ -1,0 +1,1 @@
+kupowanie /api/products/shoes/id?size=<1>&count=<3> METODA PUT

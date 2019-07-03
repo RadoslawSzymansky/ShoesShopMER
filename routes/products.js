@@ -40,4 +40,39 @@ router.get('/shoes', (req, res, next) => {
     .catch(err => next(err));
 });
 
+
+// @ PUT route /api/shoes/:id 
+router.put('/shoes/:id', (req, res, next) => {
+  const id = req.params.id;
+  const { size, count  } = req.query;
+
+  if (!size || !count) return res.status(400).json({ errMsg: 'Put all required queries'});
+
+  Product.findById(id, "inStore avaibleSizes", (err, product) => {
+    if (err) return next(err);
+
+    const { avaibleSizes, inStore } = product;
+
+    const isSizeAvaible = avaibleSizes.indexOf(size) !== -1;
+    
+    if (!isSizeAvaible) return res.status(400).json({errMsg: 'Size is not avaible'});
+
+    if (count > inStore){ 
+      res.status(400).json({ errMsg: 'Not enought products is store.' });
+      return;
+    };
+
+    product.avaibleSizes = avaibleSizes.filter(e => e !== parseInt(size));
+    product.inStore = inStore - count;
+
+    product.save()
+      .then(updatedProduct => {
+        res.json(updatedProduct);
+      }) 
+      .catch(err => next(err));
+
+  });
+
+});
+
 module.exports = router;
