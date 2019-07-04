@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-mongoose.connect(config.db, { useNewUrlParser: true });
+mongoose.connect(config.db, { useNewUrlParser: true, useCreateIndex: true });
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -24,8 +24,7 @@ db.once('open', function () {
 }); 
 
 app.use('/api/products', productsRouter);
-app.use('/api/users', usersRouter);
-
+app.use('/', usersRouter)
 app.use(errorHandler);
 
 if (process.env.NODE_ENV === 'production') {
