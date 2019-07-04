@@ -20,6 +20,9 @@ router.get('/users/:id', auth, (req, res, next) => {
 
 router.post('/users', async (req, res) => {
   try {
+    const isUserExsist = await User.findOne({email: req.body.email});
+    if (isUserExsist) return res.status(400).json({ msg: 'User already exists' });
+
     const user = new User(req.body);
     await user.save();
     const token = await user.generateAuthToken();
