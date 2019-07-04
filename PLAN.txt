@@ -10,3 +10,4 @@
 9. Endpointyn na zakup, dodanie do ulubionych. Dodanie do koszyka
 10. Zapisywanie koszyka i ulubionych w cookies. 
 11. plan state
+12. Po kupowanie wysyłać metode put do dodania do histori zakupów
