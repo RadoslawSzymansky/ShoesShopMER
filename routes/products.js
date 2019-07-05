@@ -94,3 +94,4 @@ router.get('/shoes/:id/success', auth, (req, res, next) => {
 });
 
 module.exports = router;
+

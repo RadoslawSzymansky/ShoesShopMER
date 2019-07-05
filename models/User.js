@@ -60,13 +60,18 @@ userSchema.methods.generateAuthToken = async function () {
 
 userSchema.statics.findByCredentials = async (email, password) => {
   // Search for a user by email and password.
+  console.log('findBY jestem')
   const user = await User.findOne({ email })
   if (!user) {
-    throw new Error({ error: 'Invalid login credentials' })
+    console.log('nie ma usera')
+
+    return { error: 'No user with that email' }
   }
   const isPasswordMatch = await bcrypt.compare(password, user.password)
   if (!isPasswordMatch) {
-    throw new Error({ error: 'Invalid login credentials' })
+    console.log('zle hasla')
+
+    return { error: 'Wrong password' }
   }
   return user
 }

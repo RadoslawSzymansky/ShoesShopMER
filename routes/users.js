@@ -26,8 +26,10 @@ router.post('/users', async (req, res) => {
     const user = new User(req.body);
     await user.save();
     const token = await user.generateAuthToken();
-
-    res.status(201).send({ user, token });
+    const data = JSON.stringify({ user, token })
+    const encodedData = encodeURIComponent(data);
+    // res.status(201).send({ user, token });
+    res.redirect('/email/send?data=' + encodedData);
   } catch (error) {
     res.status(400).send(error);
   };
@@ -40,10 +42,12 @@ router.post('/users/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findByCredentials(email, password);
-    if (!user) {
-      return res.status(401).send({ error: 'Login failed! Check authentication credentials' })
+    console.log(user, 'elo')
+    if (user.error) {
+      return res.status(401).send({ error: user.error})
     };
     const token = await user.generateAuthToken();
+    user.password = null;
     res.send({ user, token });
   } catch (error) {
     res.status(400).send(error);

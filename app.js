@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const productsRouter = require('./routes/products');
 const usersRouter = require('./routes/users');
+const emailRouter = require('./routes/email');
 
 const errorHandler = require('./middlewars/errorHandler')
 
@@ -24,7 +25,8 @@ db.once('open', function () {
 }); 
 
 app.use('/api/products', productsRouter);
-app.use('/', usersRouter)
+app.use('/', usersRouter);
+app.use('/', emailRouter);
 app.use(errorHandler);
 
 if (process.env.NODE_ENV === 'production') {
