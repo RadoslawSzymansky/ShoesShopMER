@@ -85,4 +85,29 @@ router.post('/users/me/logoutall', auth, async(req, res) => {
     };
 });
 
+//  @ route /users PATCH // adding to buscet or favorites!
+router.patch('/users', auth, (req, res, next) => {
+  User.findById(req.user.id, 'favorites productsInBuscet', (err, user) => {
+    if (err) next(err);
+    const {favoriteProductId, productToBuscet} = req.body;
+
+    if (favoriteProductId) {
+      if(user.favorites.indexOf(favoriteProductId) !== -1) {
+        return res.json({err: 'This product is already in favorites'});
+      };
+      user.favorites = [...user.favorites, favoriteProductId];
+    };
+    if (productToBuscet) {
+      user.productsInBuscet = [...user.productsInBuscet, productToBuscet];
+    };
+    if(!productToBuscet && !favoriteProductId){
+      return res.json({
+        err: 'Request body should contains: favoriteProductId, productToBuscet or both'
+      });
+    };
+    user.save();
+    res.json({user});
+  });
+});
+
 module.exports = router
