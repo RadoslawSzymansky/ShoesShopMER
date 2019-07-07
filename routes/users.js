@@ -6,13 +6,10 @@ const auth = require('../middlewars/auth');
 const router = express.Router();
 
 // @ GET route - get one user data
-router.get('/users/:id', auth, (req, res, next) => {
-  const { id } = req.params;
-  
-  User.find({ _id: id }, (err, users) => {
-    if (err) return next(err);
-    res.send(users);
-  });
+router.get('/user/', auth, (req, res, next) => {
+  User.findById(req.user.id)
+    .select('-password')
+    .then(user => res.json(user));
 });
 
 // @ POST /users
@@ -31,7 +28,7 @@ router.post('/users', async (req, res) => {
     // res.status(201).send({ user, token });
     res.redirect('/email/send?data=' + encodedData);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).json({msg: error});
   };
 });
 
