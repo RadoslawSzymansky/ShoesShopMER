@@ -58,7 +58,7 @@ router.get('/users/me', auth, async (req, res) => {
 });
 
 // Log user out of the application
-router.post('/users/me/logout', auth, async (req, res) => {
+router.post('/users/me/logout', auth,  async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token != req.token;

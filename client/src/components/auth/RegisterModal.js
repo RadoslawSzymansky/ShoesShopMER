@@ -41,6 +41,11 @@ class RegisterModal extends Component {
       };
     };
     
+    if(this.state.modal){
+      if(this.props.isAuthenticated) {
+        this.toggle()
+      }
+    }
   }
   toggle = () => {
     // cleaning errors
@@ -64,11 +69,10 @@ class RegisterModal extends Component {
       this.setState({msg: validationErr.join(" ")});
       return;
     };
-    console.log(name)
     this.props.register({
       name, password, email
     });
-    
+
   }
 
   validator = formValues => {

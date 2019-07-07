@@ -71,3 +71,23 @@ export const register = ({ name, email, password }) => dispatch => {
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
+
+export const logout = () => (dispatch, getState) => {
+  const token = getState().auth.token;
+
+  const config = {
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+
+  config.headers["Authorization"] = `Bearer ${token}`;
+  console.log(config)
+  axios.post('/users/me/logout', {}, config)
+    .then(res => {
+      dispatch({
+        type: LOGOUT_SUCCESS
+      });
+    });
+ 
+}
