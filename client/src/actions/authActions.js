@@ -68,7 +68,7 @@ export const register = ({ name, email, password }) => dispatch => {
       dispatch({
         type: REGISTER_FAIL
       });
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
     });
 };
 
@@ -90,4 +90,42 @@ export const logout = () => (dispatch, getState) => {
       });
     });
  
-}
+};
+
+export const login = ({ email, password }) => dispatch => {
+  //headers
+  const config = {
+    headers: {
+      'Content-type': 'application/json'
+    }
+  }
+
+  const body = JSON.stringify({
+    email, password
+  });
+  console.log(body)
+  axios.post('/users/login', body, config)
+    .then(res => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data
+      })
+    })
+    .catch(err => {
+      dispatch({
+        type: LOGIN_FAIL
+      });
+      dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
+    });
+};
+
+export const tokenConfig = getState => {
+  const token = getState().auth.token;
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+  };
+  return config;
+};

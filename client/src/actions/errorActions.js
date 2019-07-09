@@ -1,7 +1,7 @@
 import { GET_ERRORS, CLEAR_ERRORS } from '../actions/types';
 
 // return errors 
-export const returnErrors = (msg, status, id = "REGISTER_FAIL") => {
+export const returnErrors = (msg, status, id) => {
   return {
     type: GET_ERRORS,
     payload: { msg, status, id }

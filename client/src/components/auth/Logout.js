@@ -8,7 +8,7 @@ class Logout extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Button onClick={this.props.logout}>Logout</Button>
+        <Button negative onClick={this.props.logout}>Logout</Button>
       </React.Fragment>
     )
   }

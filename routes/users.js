@@ -41,13 +41,13 @@ router.post('/users/login', async (req, res) => {
     const user = await User.findByCredentials(email, password);
     console.log(user, 'elo')
     if (user.error) {
-      return res.status(401).send({ error: user.error})
+      return res.status(401).json({ msg: user.error})
     };
     const token = await user.generateAuthToken();
     user.password = null;
     res.send({ user, token });
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).json({msg: error})
   };
 });
 
