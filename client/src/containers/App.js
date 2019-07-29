@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import '../styles/App.scss';
+import history from '../history';
 
 import 'semantic-ui-css/semantic.min.css';
 import { connect } from 'react-redux';
@@ -24,7 +25,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div className="app">
           <UserNavbar auth={this.props.auth}/>
           <Header/>
@@ -36,7 +37,10 @@ class App extends React.Component {
   }
 }
 
-const mapStateToPtops = state => ({
+const mapStateToPtops = state => {
+  console.log(state);
+  return {
   auth: state.auth
-});
+  }
+};
 export default connect(mapStateToPtops)(App);

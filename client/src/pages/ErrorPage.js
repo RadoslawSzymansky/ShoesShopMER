@@ -5,7 +5,7 @@ const ErrorPage =  () => (
   <div>
     <h3>
       Sorry, we couldn't find that site.
-      <Link to="/">Go back to main page</Link>
+      <Link to="/"> Go back to main page</Link>
     </h3>
   </div>
 );

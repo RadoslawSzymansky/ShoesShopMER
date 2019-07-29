@@ -11,3 +11,8 @@
 10. Zapisywanie koszyka i ulubionych w cookies. 
 11. plan state
 12. Po kupowanie wysyłać metode put do dodania do histori zakupów
+
+
+
+
+---  dokonczyc wszystkie kreatory akcji, a pozniej reucery które będa je obslugiwac.

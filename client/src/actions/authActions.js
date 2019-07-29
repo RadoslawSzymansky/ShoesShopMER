@@ -1,17 +1,16 @@
 import axios from 'axios';
 import { returnErrors } from './errorActions';
+import store from '../store';
 
 import {
   USER_LOADED,
-USER_LOADING,
-AUTH_ERROR,
-LOGIN_SUCCESS,
-LOGIN_FAIL,
-LOGOUT_SUCCESS,
-REGISTER_SUCCESS,
-REGISTER_FAIL,
-GET_ERRORS,
-CLEAR_ERRORS
+  USER_LOADING,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT_SUCCESS,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL
 } from '../actions/types';
 
 // Checking token & loading user
@@ -21,15 +20,15 @@ export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
   
   // get token from localStiorage, which is tried to taken from localstorage in reducer
-  const token = getState().auth.token;
- 
+  const token = localStorage.getItem('token');
+
   const config = {
     headers: {
       "Content-type": "application/json"
     }
   };
 
-  if (token) config.headers["Authorization"] = `"Bearer ${token}"`;
+  if (token) config.headers["Authorization"] = `Bearer ${token}`;
 
   axios.get('/user', config)
     .then(res => dispatch({
@@ -56,7 +55,6 @@ export const register = ({ name, email, password }) => dispatch => {
   const body = JSON.stringify({
     name, email, password
   });
-  console.log(body)
   axios.post('/users', body, config)
     .then(res => {
       dispatch({
@@ -82,7 +80,6 @@ export const logout = () => (dispatch, getState) => {
   };
 
   config.headers["Authorization"] = `Bearer ${token}`;
-  console.log(config)
   axios.post('/users/me/logout', {}, config)
     .then(res => {
       dispatch({
@@ -103,7 +100,6 @@ export const login = ({ email, password }) => dispatch => {
   const body = JSON.stringify({
     email, password
   });
-  console.log(body)
   axios.post('/users/login', body, config)
     .then(res => {
       dispatch({
@@ -129,3 +125,18 @@ export const tokenConfig = getState => {
   };
   return config;
 };
+
+export const getConfig = ()=> {
+
+  const token = store.getState().auth.token;
+
+  const config = {
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+
+  config.headers["Authorization"] = `Bearer ${token}`;
+
+  return config
+}

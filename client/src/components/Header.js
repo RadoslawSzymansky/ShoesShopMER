@@ -5,8 +5,8 @@ const UserNavbar = props => {
 
   return (
     <div className="header" style={{backgroundImage: `url(${bootsImg})`}}>
-      <IconButton to="/buscet" iconName="shopping cart" color="teal"/>
-      <IconButton to="/favorites" iconName="star" color="yellow"/>
+      <IconButton to="/user/basket" iconName="shopping cart" color="teal"/>
+      <IconButton to="/user/favorites" iconName="star" color="yellow"/>
     </div>
   );
 };

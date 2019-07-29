@@ -24,7 +24,7 @@ db.once('open', function () {
   console.log('Połaczone z mongo DB!');
 }); 
 
-app.use('/api/products', productsRouter);
+app.use('/api', productsRouter);
 app.use('/', usersRouter);
 app.use('/', emailRouter);
 app.use(errorHandler);

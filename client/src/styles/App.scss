@@ -6,7 +6,8 @@
     justify-content: flex-end;
     padding-right: 10px;
   }
-  .header{ 
+
+  .header { 
     min-height: 180px;
     background-position: 0 -50px;
     background-size: cover;
@@ -16,6 +17,16 @@
     padding-right: 20px;
     .icon{
       margin-right: 20px;
+    }
+  }
+  
+  .ui.menu.navigation {
+    margin: 0;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: center;
+    .ui.blue.basic.button:hover, .ui.blue.basic.button.active {
+      font-weight: bold;
     }
   }
 }

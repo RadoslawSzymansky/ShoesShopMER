@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ShoesList = props => {
+const ShoeComponent = props => {
   return(
     <div>List</div>
   );
 };
 
-export default ShoesList;
+export default ShoeComponent;

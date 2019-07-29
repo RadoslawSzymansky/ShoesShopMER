@@ -45,6 +45,18 @@ router.get('/shoes', (req, res, next) => {
 });
 
 
+// @@ route /api/shoes GET - with pagination queires
+
+router.get('/shoes/:id', (req, res, next) => {
+  const id = req.params.id;
+
+  Product.findById(id, (err, product) => {
+    if (err) return next(err);
+    res.json(product);
+  })
+});
+
+
 // @ PUT route /api/shoes/:id  - BUYING  product!
 router.put('/shoes/:id', auth, (req, res, next) => {
   const id = req.params.id;

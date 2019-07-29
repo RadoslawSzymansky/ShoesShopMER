@@ -25,8 +25,10 @@ router.post('/users', async (req, res) => {
     const token = await user.generateAuthToken();
     const data = JSON.stringify({ user, token })
     const encodedData = encodeURIComponent(data);
+    res.send({ user, token });
     // res.status(201).send({ user, token });
-    res.redirect('/email/send?data=' + encodedData);
+    // res.redirect('/email/send?data=' + encodedData);
+
   } catch (error) {
     res.status(400).json({msg: error});
   };
@@ -39,7 +41,7 @@ router.post('/users/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findByCredentials(email, password);
-    console.log(user, 'elo')
+
     if (user.error) {
       return res.status(401).json({ msg: user.error})
     };
@@ -107,4 +109,32 @@ router.patch('/users', auth, (req, res, next) => {
   });
 });
 
-module.exports = router
+//  @ route /users PATCH // adding to buscet or favorites!
+router.delete('/users/basket/:id', auth, (req, res, next) => {
+  const id = req.params.id;
+
+  User.findById(req.user.id, 'productsInBuscet', (err, user) => {
+    if(err) return next(err);
+
+    console.log(user)
+    // tu sprawdzic jak wyglada struktura tablicy czy ten user to bezposrednio tablic
+    // a czy moze nalezy zrobic user.productsTablica i z niej wyszukac i usun
+    res.json({ user });
+  });
+});
+
+router.patch('/users/favorites/:id', auth, (req, res, next) => {
+  const id = req.params.id;
+
+  User.findById(req.user.id, 'favorites', (err, user) => {
+
+    if(err) return next(err);
+
+    // tu sprawdzic jak wyglada struktura tablicy czy ten user to bezposrednio tablica
+    // czy moze nalezy zrobic user.productsTablica i z niej wyszukac i ac element z podanym z id z req. para,s
+    user.save();
+    res.json({ user });
+  });
+});
+
+module.exports = router;
