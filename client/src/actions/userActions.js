@@ -117,26 +117,24 @@ export const addToFavorite = favoriteProductId => (dispatch) => {
 export const removeFromBasket = productId => dispatch => {
   const config = getConfig();
   
-
   axios.patch(`/users/basket/${productId}`, {}, config)
     .then(res => {
       dispatch({
         type: REMOVE_FROM_BASKET,
-        payload: res.data
+        payload: productId
       });
     });
 };
 
 /// usuwanie z ulubionych. sprawdzam czy mam taki endpoint na serwerze
-export const removeFromBasket = productId => dispatch => {
+export const removeFromFavorite = productId => dispatch => {
   const config = getConfig();
 
-
-  axios.patch(`/users/basket/${productId}`, {}, config)
+  axios.patch(`/users/favorites/${productId}`, {}, config)
     .then(res => {
       dispatch({
         type: REMOVE_FROM_FAVORITES,
-        payload: res.data
+        payload: productId
       });
     });
 };

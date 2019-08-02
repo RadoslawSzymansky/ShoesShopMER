@@ -26,8 +26,8 @@ router.post('/users', async (req, res) => {
     const data = JSON.stringify({ user, token })
     const encodedData = encodeURIComponent(data);
     res.send({ user, token });
-    // res.status(201).send({ user, token });
-    // res.redirect('/email/send?data=' + encodedData);
+    
+    /// tu uruchomic funckje wysyalajaca maile/
 
   } catch (error) {
     res.status(400).json({msg: error});
@@ -109,29 +109,51 @@ router.patch('/users', auth, (req, res, next) => {
   });
 });
 
-//  @ route /users PATCH // adding to buscet or favorites!
-router.delete('/users/basket/:id', auth, (req, res, next) => {
-  const id = req.params.id;
+//  @ route /users PATCH // removing to  favorites!
 
-  User.findById(req.user.id, 'productsInBuscet', (err, user) => {
-    if(err) return next(err);
-
-    console.log(user)
-    // tu sprawdzic jak wyglada struktura tablicy czy ten user to bezposrednio tablic
-    // a czy moze nalezy zrobic user.productsTablica i z niej wyszukac i usun
-    res.json({ user });
-  });
-});
-
+//WORKING!
 router.patch('/users/favorites/:id', auth, (req, res, next) => {
   const id = req.params.id;
 
   User.findById(req.user.id, 'favorites', (err, user) => {
-
     if(err) return next(err);
 
-    // tu sprawdzic jak wyglada struktura tablicy czy ten user to bezposrednio tablica
-    // czy moze nalezy zrobic user.productsTablica i z niej wyszukac i ac element z podanym z id z req. para,s
+    const index = user.favorites.findIndex(e => 
+      String(e) === String(id)
+    );
+
+    if (index === -1) { 
+      console.log(user)
+     return  res.status(400).send({err: 'Not exist in favorites'});
+    };
+
+    user.favorites.splice(index, 1);
+    
+    user.save();
+    res.json({ user });
+  });
+});
+
+
+//  @ route /users PATCH // adding to buscet !
+
+router.patch('/users/basket/:id', auth, (req, res, next) => {
+  const id = req.params.id;
+
+  User.findById(req.user.id, 'productsInBuscet', (err, user) => {
+    if (err) return next(err);
+
+    const index = user.productsInBuscet.findIndex(e =>
+      String(e.id) === String(id)
+    );
+
+    if (index === -1) {
+      console.log(user)
+      return res.status(400).send({ err: 'Not exist in basket' });
+    };
+
+    user.productsInBuscet.splice(index, 1);
+
     user.save();
     res.json({ user });
   });
