@@ -15,6 +15,6 @@ const Content = () => {
       <Route component={ErrorPage}></Route>
     </Switch>
   );
-;
-}
+};
+
 export default Content;

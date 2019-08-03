@@ -29,12 +29,14 @@ export const fetchProduct = id => dispatch => {
       dispatch({
         type: FETCH_SHOE_FAILED,
         payload: {
+          id,
           msg: err
         }
       });
     });
 };
 
+// getting alll products 
 export const fetchProducts = () => (dispatch) => {
   dispatch({
     type: FETCH_SHOES_LOADING
@@ -53,6 +55,6 @@ export const fetchProducts = () => (dispatch) => {
         payload: {
           msg: err
         }
-      })
-    })
+      });
+    });
 };

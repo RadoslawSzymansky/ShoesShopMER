@@ -35,7 +35,7 @@ class App extends React.Component {
       </Router>
     )
   }
-}
+};
 
 const mapStateToPtops = state => {
   console.log(state);
@@ -43,4 +43,5 @@ const mapStateToPtops = state => {
   auth: state.auth
   }
 };
+
 export default connect(mapStateToPtops)(App);
