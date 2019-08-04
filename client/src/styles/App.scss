@@ -30,3 +30,20 @@
     }
   }
 }
+
+.favorite:hover {
+  color: #222
+}
+.sizeBox {
+  display: flex;
+  
+  .size {
+    background-color: rgb(65, 66, 66);
+    box-shadow: 0 0 4px 1p#54C8FF;
+    color: #54C8FF;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin: 0 3px;
+  }
+}

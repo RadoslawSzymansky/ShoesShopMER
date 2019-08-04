@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Loader from '../components/Loader';
 
 import { fetchProducts } from '../actions/shoesAction';
 import ShoeComponent from './ShoeComponent';
@@ -7,22 +8,31 @@ import ShoeComponent from './ShoeComponent';
 class ShoesList extends React.Component {
   componentDidMount() {
     this.props.fetchProducts();
-    console.log('pobranie')
   }
 
   renderShoes() {
-    if(this.props.shoes) {
-      return Object.values(this.props.shoes).map(e => (
-        <ShoeComponent/>
-      ))
-    } else return null
+    const {areLoading, isFailed} = this.props.shoes;
 
-    // dac loader a jak nie wczyta to info 
-  } 
+    if(!areLoading && !isFailed) {
+
+      return Object.values(this.props.shoes).map(shoe => (
+        <ShoeComponent key={shoe._id} {...shoe}/>
+      ));
+
+    } else if (areLoading) {
+
+      return <Loader />
+
+    } else if (isFailed) {
+
+      return <p>Sorry, internal server problem</p>;
+
+    };
+  } ;
+
   render() {
-    console.log(this.props)
     return (
-      <div>
+      <div className="ui one cards">
         {this.renderShoes()}
       </div>
     )
@@ -31,6 +41,6 @@ class ShoesList extends React.Component {
 
 const mapStateToProps = state => ({
   shoes: state.products
-})
+});
 
-export default connect(mapStateToProps, {fetchProducts})(ShoesList);
+export default connect(mapStateToProps, {fetchProducts})(ShoesList);  

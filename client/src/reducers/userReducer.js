@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import {
   FETCH_BASKET_LOADING,
   FETCH_BASKET_FAILED,

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Router } from 'react-router-dom';
 import '../styles/App.scss';
 import history from '../history';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 import 'semantic-ui-css/semantic.min.css';
 import { connect } from 'react-redux';
@@ -30,7 +31,9 @@ class App extends React.Component {
           <UserNavbar auth={this.props.auth}/>
           <Header/>
           <Menu/>
-          <Content/>
+          <div className="content" style={{padding: 10}}>
+            <Content />
+          </div>
         </div>
       </Router>
     )
@@ -38,7 +41,6 @@ class App extends React.Component {
 };
 
 const mapStateToPtops = state => {
-  console.log(state);
   return {
   auth: state.auth
   }

@@ -15,9 +15,10 @@ import axios from 'axios';
 
 export const fetchProduct = id => dispatch => {
   dispatch({
-    type: FETCH_SHOE_LOADING
-  });
-
+    type: FETCH_SHOE_LOADING,
+    payload: id
+  }); 
+  console.log('pobieranie', id)
   axios.get(`/api/shoes/${id}`)
     .then(res => {
       dispatch({

@@ -12,6 +12,7 @@ export default function (state = {}, action) {
   switch (action.type) {
 
     case FETCH_SHOES_LOADING:
+      
       return {
         areLoading: true
       };
@@ -23,6 +24,8 @@ export default function (state = {}, action) {
       return { areLoading: false, isFailed: true };
 
     case FETCH_SHOE_LOADING:
+      console.log('zaczete')
+
       return {
         ...state,
         [action.payload]: {
@@ -31,12 +34,16 @@ export default function (state = {}, action) {
       };
     
     case FETCH_SHOE_SUCCESS:
+      console.log('sukces pobieranie')
+
       return {
         ...state,
-        [action.payload.id]: action.payload
+        [action.payload._id]: action.payload
       }
     
     case FETCH_SHOE_FAILED:
+      console.log('sukces pobieranie')
+
       return {
         ...state,
         [action.payload.id]: {
