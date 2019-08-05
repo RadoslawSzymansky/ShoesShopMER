@@ -1,11 +1,18 @@
 import React from 'react';
-const starStyles = { position: "absolute", top: 15, right: 15, cursor: 'pointer' }
+import { addToFavorites } from '../actions/userActions';
+import {connect} from 'react-redux';
 
-const FavoriteStar = productId => {
-  // <i className="star"/>
+const starStyles = { position: "absolute", top: 15, right: 15, cursor: 'pointer' };
+
+const FavoriteStar = ({id, addToFavorites, favorites}) => {
+  const isFavorite = favorites.indexOf(id) !== -1;
   return (
-    <i className="star icon outline yellow big favorite" style={starStyles} ></i>
+    <i className={`star icon ${isFavorite ? '' : 'outline'} yellow big favorite`} style={starStyles} onClick={() => addToFavorites(id)} ></i>
   )
 };
 
-export default FavoriteStar;
+const mapStateToProps = state => ({
+  favorites: state.user.favorites
+});
+
+export default connect(mapStateToProps, { addToFavorites })(FavoriteStar);

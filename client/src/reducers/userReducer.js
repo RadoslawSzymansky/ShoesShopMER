@@ -11,7 +11,14 @@ import {
   REMOVE_FROM_FAVORITES
 } from '../actions/types';
 
-export default function (state = {}, action) {
+const initialState = { 
+  basket: [],
+  favorites: []
+};
+
+
+
+export default function (state = initialState, action) {
   switch (action.type) {
     // basket
     case FETCH_BASKET_LOADING:
@@ -76,6 +83,7 @@ export default function (state = {}, action) {
     
     //working on favorites
     case ADD_TO_FAVORITE:
+      console.log('wywoluje')
       return {
         ...state,
         favorites: [...state.favorites, action.payload]

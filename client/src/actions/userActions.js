@@ -98,7 +98,7 @@ export const addProductToBuscet = productToBuscet => (dispatch, getState) => {
     });
 };
 
-export const addToFavorite = favoriteProductId => (dispatch) => {
+export const addToFavorites = favoriteProductId => (dispatch) => {
   const config = getConfig();
   const body = {
     favoriteProductId
@@ -108,7 +108,7 @@ export const addToFavorite = favoriteProductId => (dispatch) => {
     .then(res => {
       dispatch({
         type: ADD_TO_FAVORITE,
-        payload: res.data
+        payload: favoriteProductId
       });
     });
 };

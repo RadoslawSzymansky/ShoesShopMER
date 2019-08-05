@@ -25,6 +25,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <Router history={history}>
         <div className="app">
@@ -42,7 +43,8 @@ class App extends React.Component {
 
 const mapStateToPtops = state => {
   return {
-  auth: state.auth
+  auth: state.auth,
+  user: state.user
   }
 };
 
