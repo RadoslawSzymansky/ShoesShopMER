@@ -15,7 +15,7 @@ import {
 
 // Checking token & loading user
 
-export const loadUser = () => (dispatch, getState) => {
+export const loadUser = () => (dispatch) => {
   // uSERm loading
   dispatch({ type: USER_LOADING });
   
@@ -27,14 +27,16 @@ export const loadUser = () => (dispatch, getState) => {
       "Content-type": "application/json"
     }
   };
-
+  //
   if (token) config.headers["Authorization"] = `Bearer ${token}`;
 
   axios.get('/user', config)
-    .then(res => dispatch({
+    .then(res => {
+      dispatch({
       type: USER_LOADED,
       payload: res.data
-    }))
+      })
+    })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({

@@ -12,11 +12,20 @@ import Loader from '../components/Loader';
 class ShoeComponent extends React.Component  {
   state = {
     size: "",
-    count: 1
+    count: 1,
+    err: ''
   };
 
-  handleAddProductToBasket = () => {
+  handleAddProductToBasket = (id) => {
+    const {size , count} = this.state;
 
+    if (!size) return this.setState({err: 'Choose size'});
+
+    const productToBasket = {size, count, id};
+
+    this.props.addProductToBuscet(productToBasket);
+
+    this.setState({ err: '' });
   }
 
   render () {
@@ -50,13 +59,14 @@ class ShoeComponent extends React.Component  {
         </div>
         <div className="extra">
           <SizeBox active={this.state.size} chooseSize={(size) => this.setState({size})} sizes={props.avaibleSizes} />
+          <h6 style={{color: 'red'}}>{this.state.err}</h6>
           <h5>Products in store <span style={{ color: '#555' }}>{props.inStore}</span></h5>
         </div>
         <div className="extra">
           <div className="countBox">
             <label htmlFor="count">Count:</label><input id='count' type="number" value={this.state.count} onChange={(e) => this.setState({count: Number(e.target.value)})} />  
           </div>
-          <button onClick={this.handleAddProductToBasket} className="ui secondary button" style={{ width: '100%' }}>
+          <button onClick={this.handleAddProductToBasket.bind(null, props._id)} className="ui secondary button" style={{ width: '100%' }}>
             Add to basket
           </button>
         </div>

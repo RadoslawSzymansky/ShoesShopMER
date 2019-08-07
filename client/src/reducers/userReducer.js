@@ -30,6 +30,7 @@ export default function (state = initialState, action) {
       };
 
     case FETCH_BASKET_SUCCESS:
+
       return {
         ...state,
         basket: action.payload
@@ -83,14 +84,13 @@ export default function (state = initialState, action) {
     
     //working on favorites
     case ADD_TO_FAVORITE:
-      console.log('wywoluje')
       return {
         ...state,
         favorites: [...state.favorites, action.payload]
       };
     
     case REMOVE_FROM_FAVORITES:
-      const updatedFavorites = state.basket.filter(e => e !== action.payload);
+      const updatedFavorites = state.favorites.filter(e => e !== action.payload);
       return {
         ...state,
         favorites: updatedFavorites

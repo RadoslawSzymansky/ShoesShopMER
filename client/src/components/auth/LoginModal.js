@@ -58,8 +58,6 @@ class LoginModal extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log('submit')
-    console.log(this.state.msg)
     const {password, email } = this.state;
     const validationErr = this.validator({ password, email });
 
@@ -67,7 +65,6 @@ class LoginModal extends Component {
       this.setState({ msg: validationErr.join(" ") });
       return;
     };
-    console.log("po walidacji", password, email)
     
     this.props.login({ password, email })
   }

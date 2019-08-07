@@ -123,8 +123,7 @@ router.patch('/users/favorites/:id', auth, (req, res, next) => {
     );
 
     if (index === -1) { 
-      console.log(user)
-     return  res.status(400).send({err: 'Not exist in favorites'});
+      return  res.status(400).send({err: 'Not exist in favorites'});
     };
 
     user.favorites.splice(index, 1);
@@ -148,7 +147,6 @@ router.patch('/users/basket/:id', auth, (req, res, next) => {
     );
 
     if (index === -1) {
-      console.log(user)
       return res.status(400).send({ err: 'Not exist in basket' });
     };
 
@@ -158,5 +156,28 @@ router.patch('/users/basket/:id', auth, (req, res, next) => {
     res.json({ user });
   });
 });
+
+// get Favorites
+
+router.get('/users/favorites', auth, async (req, res) => {
+
+  User.findById(req.user._id, 'favorites', (err, user) => {
+
+    if (err) return res.json({ msg: err });
+
+    res.json(user.favorites)
+  });
+});
+
+router.get('/users/basket', auth, async (req, res) => {
+
+  User.findById(req.user._id, 'productsInBuscet', (err, user) => {
+
+    if(err) return res.json({msg: err});
+
+    res.json(user.productsInBuscet)
+  });
+});
+
 
 module.exports = router;

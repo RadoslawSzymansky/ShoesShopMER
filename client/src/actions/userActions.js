@@ -12,8 +12,8 @@ import {
   REMOVE_FROM_FAVORITES,
   BUY_PRODUCT_FAILED,
   BUY_PRODUCT_SUCCESS
-} from './types';
-import { getConfig } from './authActions';
+} from './types'; 
+import { getConfig, tokenConfig } from './authActions';
 
 export const buyProduct = ({ id, size, count }) => dispatch => {
   
@@ -36,13 +36,13 @@ export const buyProduct = ({ id, size, count }) => dispatch => {
 };
 
 export const fetchBasket = () => (dispatch, getState) => {
-  const config = getConfig();
+
+  const config = tokenConfig(getState);
 
   dispatch({
     type: FETCH_BASKET_LOADING
   });
- 
-  axios.get(`/users/basket`, {}, config)
+  axios.get(`/users/basket`, config)
     .then(res => {
       dispatch({
         type: FETCH_BASKET_SUCCESS,
@@ -55,18 +55,17 @@ export const fetchBasket = () => (dispatch, getState) => {
         payload: {
           msg: err
         }
-      })
+      });
     });
 };
 
 export const fetchFavorites = () => (dispatch, getState) => {
-  const config = getConfig();
-
+  const config = getConfig(getState);
   dispatch({
     type: FETCH_FAVORITES_LOADING
   });
 
-  axios.get(`/users/favorites`, {}, config)
+  axios.get(`/users/favorites`, config)
     .then(res => {
       dispatch({
         type: FETCH_FAVORITES_SUCCESS,
@@ -84,6 +83,9 @@ export const fetchFavorites = () => (dispatch, getState) => {
 };
 
 export const addProductToBuscet = productToBuscet => (dispatch, getState) => {
+  console.log('dodaje')
+  // musze dodać że jak nie jestes  zutoryzowany to musi dodawac do state. A przy logowaniu wrzucac do koszyka
+  
   const config = getConfig();
   const body = {
     productToBuscet
@@ -91,10 +93,14 @@ export const addProductToBuscet = productToBuscet => (dispatch, getState) => {
 
   axios.patch(`/users`, body, config)
     .then(res => {
+      console.log('dodalo')
+
       dispatch({
         type: ADD_TO_BASKET,
-        payload: res.data
+        payload: res.data.productsInBascet
       });
+    }).catch(err => {
+      console.log('nie dodalo', err);
     });
 };
 
@@ -113,6 +119,7 @@ export const addToFavorites = favoriteProductId => (dispatch) => {
     });
 };
 
+
 /// usuwanie z koszyka. sprawdzam czy mam taki endpoint na serwerze
 export const removeFromBasket = productId => dispatch => {
   const config = getConfig();
@@ -127,7 +134,7 @@ export const removeFromBasket = productId => dispatch => {
 };
 
 /// usuwanie z ulubionych. sprawdzam czy mam taki endpoint na serwerze
-export const removeFromFavorite = productId => dispatch => {
+export const removeFromFavorites = productId => dispatch => {
   const config = getConfig();
 
   axios.patch(`/users/favorites/${productId}`, {}, config)

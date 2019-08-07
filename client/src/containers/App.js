@@ -8,6 +8,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import 'semantic-ui-css/semantic.min.css';
 import { connect } from 'react-redux';
 import { loadUser } from '../actions/authActions';
+import { fetchBasket, fetchFavorites } from '../actions/userActions';
 import store from '../store';
 
 import UserNavbar from '../components/UserNavbar';
@@ -17,7 +18,16 @@ import Content from '../components/Content';
 
 class App extends React.Component {
   componentDidMount() {
-    store.dispatch(loadUser());
+    store.dispatch(loadUser());    
+  }
+
+  componentDidUpdate() {
+    if (this.props.auth.isAuthenticated && !this.props.user.basket.length && !this.props.user.basket.isLoading ) {
+
+      store.dispatch(fetchBasket())
+
+      this.props.fetchFavorites();
+    }
   }
 
   static propTypes = {
@@ -41,11 +51,11 @@ class App extends React.Component {
   }
 };
 
-const mapStateToPtops = state => {
+const mapStateToProps = state => {
   return {
   auth: state.auth,
   user: state.user
   }
 };
 
-export default connect(mapStateToPtops)(App);
+export default connect(mapStateToProps, {fetchBasket, fetchFavorites})(App);
