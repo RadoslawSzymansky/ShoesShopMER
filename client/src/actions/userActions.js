@@ -13,6 +13,8 @@ import {
   BUY_PRODUCT_FAILED,
   BUY_PRODUCT_SUCCESS
 } from './types'; 
+import history from '../history';
+
 import { getConfig, tokenConfig } from './authActions';
 
 export const buyProduct = ({ id, size, count }) => dispatch => {
@@ -83,8 +85,17 @@ export const fetchFavorites = () => (dispatch, getState) => {
 };
 
 export const addProductToBuscet = productToBuscet => (dispatch, getState) => {
-  console.log('dodaje')
-  // musze dodać że jak nie jestes  zutoryzowany to musi dodawac do state. A przy logowaniu wrzucac do koszyka
+
+  const { isAuthenticated } = getState().auth;
+
+  if ( !isAuthenticated ) {
+    dispatch({
+      type: ADD_TO_BASKET,
+      payload: productToBuscet
+    });
+    
+    return;
+  }
   
   const config = getConfig();
   const body = {
@@ -93,12 +104,14 @@ export const addProductToBuscet = productToBuscet => (dispatch, getState) => {
 
   axios.patch(`/users`, body, config)
     .then(res => {
-      console.log('dodalo')
 
       dispatch({
         type: ADD_TO_BASKET,
-        payload: res.data.productsInBascet
+        payload: productToBuscet
       });
+
+      setTimeout(() => history.push('/'), 500);
+
     }).catch(err => {
       console.log('nie dodalo', err);
     });

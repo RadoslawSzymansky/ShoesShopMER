@@ -13,6 +13,8 @@ import {
   REGISTER_FAIL
 } from '../actions/types';
 
+import { addProductToBuscet } from './userActions';
+
 // Checking token & loading user
 
 export const loadUser = () => (dispatch) => {
@@ -91,7 +93,7 @@ export const logout = () => (dispatch, getState) => {
  
 };
 
-export const login = ({ email, password }) => dispatch => {
+export const login = ({ email, password }) => (dispatch, getState) => {
   //headers
   const config = {
     headers: {
@@ -104,10 +106,21 @@ export const login = ({ email, password }) => dispatch => {
   });
   axios.post('/users/login', body, config)
     .then(res => {
+
+
+      console.log("logowanie")
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
-      })
+      });
+      const basketProducts = getState().user.basket;
+
+      setTimeout(() => {
+        basketProducts.forEach(product => {
+          console.log('dodaje do koszyka z poziomu login akcji')
+          addProductToBuscet(product);
+        });
+      }, 100)
     })
     .catch(err => {
       dispatch({

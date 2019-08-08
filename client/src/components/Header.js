@@ -1,12 +1,14 @@
 import React from 'react';
-import IconButton from './IconButton'
-import bootsImg from '../images/boots.jpg'
+import bootsImg from '../images/boots.jpg';
+import BasketIcon from './BasketIcon';
+import FavoriteMainIcon from './FavoriteMainIcon'
+
 const UserNavbar = props => {
 
   return (
     <div className="header" style={{backgroundImage: `url(${bootsImg})`}}>
-      <IconButton to="/user/basket" iconName="shopping cart" color="teal"/>
-      <IconButton to="/user/favorites" iconName="star" color="yellow"/>
+      <BasketIcon />
+      <FavoriteMainIcon />
     </div>
   );
 };

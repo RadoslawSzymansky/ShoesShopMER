@@ -22,10 +22,11 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.auth.isAuthenticated && !this.props.user.basket.length && !this.props.user.basket.isLoading ) {
+    console.log(this.props)
+    if (this.props.auth.isAuthenticated && !this.props.user.basket.length && !this.props.user.basketIsLoading ) {
 
       store.dispatch(fetchBasket())
-
+      console.log('pobieramm apppppp ')
       this.props.fetchFavorites();
     }
   }
@@ -54,7 +55,7 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return {
   auth: state.auth,
-  user: state.user
+  user: state.user,
   }
 };
 

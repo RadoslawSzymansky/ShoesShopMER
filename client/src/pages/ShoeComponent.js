@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProduct } from '../actions/shoesAction';
 import { addProductToBuscet, addToFavorites } from '../actions/userActions';
@@ -20,6 +20,7 @@ class ShoeComponent extends React.Component  {
     const {size , count} = this.state;
 
     if (!size) return this.setState({err: 'Choose size'});
+    if (count <= 0) return this.setState({ err: 'Count must be bigger than 0' });
 
     const productToBasket = {size, count, id};
 

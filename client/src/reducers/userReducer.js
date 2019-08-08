@@ -13,7 +13,9 @@ import {
 
 const initialState = { 
   basket: [],
-  favorites: []
+  favorites: [],
+  basketIsFailed: false,
+  basketIsLoading: false
 };
 
 
@@ -22,27 +24,31 @@ export default function (state = initialState, action) {
   switch (action.type) {
     // basket
     case FETCH_BASKET_LOADING:
+      console.log('pobieram start loading')
+
       return {
         ...state,
-        basket: {
-          isLoading: true
-        }
+        basket: [],
+        basketIsLoading: true
       };
 
     case FETCH_BASKET_SUCCESS:
-
+      console.log('pobralem')
       return {
-        ...state,
-        basket: action.payload
+        ...state, 
+        basket: action.payload,
+        basketIsLoading: false
+
       };
 
     case FETCH_BASKET_FAILED:
+      console.log(' nie pobralem')
+
       return {
         ...state,
-        basket: {
-          isLoading: false,
-          isFailed: true
-        }
+        basket: [],
+        basketIsLoading: false,
+        basketIsFailed: true
       };
 
     // favorites
