@@ -8,7 +8,8 @@ import {
   ADD_TO_FAVORITE,
   ADD_TO_BASKET,
   REMOVE_FROM_BASKET,
-  REMOVE_FROM_FAVORITES
+  REMOVE_FROM_FAVORITES,
+  ADD_TO_BASKET_REQUEST
 } from '../actions/types';
 
 const initialState = { 
@@ -24,16 +25,13 @@ export default function (state = initialState, action) {
   switch (action.type) {
     // basket
     case FETCH_BASKET_LOADING:
-      console.log('pobieram start loading')
 
       return {
         ...state,
-        basket: [],
         basketIsLoading: true
       };
 
     case FETCH_BASKET_SUCCESS:
-      console.log('pobralem')
       return {
         ...state, 
         basket: action.payload,
@@ -42,7 +40,6 @@ export default function (state = initialState, action) {
       };
 
     case FETCH_BASKET_FAILED:
-      console.log(' nie pobralem')
 
       return {
         ...state,
@@ -75,10 +72,16 @@ export default function (state = initialState, action) {
       };
 
     // working on basket  
+    case ADD_TO_BASKET_REQUEST: 
+      return {
+        ...state,
+        basketIsLoading: true
+      };
     case ADD_TO_BASKET:
       return {
         ...state,
-        basket: [...state.basket, action.payload]
+        basket: [...state.basket, action.payload],
+        basketIsLoading: false
       };
 
     case REMOVE_FROM_BASKET:

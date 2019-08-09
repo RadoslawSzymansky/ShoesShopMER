@@ -21,22 +21,23 @@ class App extends React.Component {
     store.dispatch(loadUser());    
   }
 
-  componentDidUpdate() {
-    console.log(this.props)
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.props.user)
     if (this.props.auth.isAuthenticated && !this.props.user.basket.length && !this.props.user.basketIsLoading ) {
-
+      console.log('1')
       store.dispatch(fetchBasket())
-      console.log('pobieramm apppppp ')
       this.props.fetchFavorites();
+    } else if(this.props.auth.isAuthenticated && this.props.user.basket.length !== prevProps.user.basket.length && !this.props.user.basketIsLoading) {
+      store.dispatch(fetchBasket())
+      console.log('2')
     }
   }
 
   static propTypes = {
     auth: PropTypes.object.isRequired
-  }
+  } 
 
   render() {
-    console.log(this.props)
     return (
       <Router history={history}>
         <div className="app">

@@ -26,7 +26,7 @@ class ShoeComponent extends React.Component  {
 
     this.props.addProductToBuscet(productToBasket);
 
-    this.setState({ err: '' });
+    this.setState({ err: '', size: '', count: 1 });
   }
 
   render () {

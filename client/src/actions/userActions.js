@@ -8,6 +8,7 @@ import {
   FETCH_FAVORITES_FAILED,
   ADD_TO_FAVORITE,
   ADD_TO_BASKET,
+  ADD_TO_BASKET_REQUEST,
   REMOVE_FROM_BASKET,
   REMOVE_FROM_FAVORITES,
   BUY_PRODUCT_FAILED,
@@ -87,7 +88,7 @@ export const fetchFavorites = () => (dispatch, getState) => {
 export const addProductToBuscet = productToBuscet => (dispatch, getState) => {
 
   const { isAuthenticated } = getState().auth;
-
+  dispatch({type: ADD_TO_BASKET_REQUEST})
   if ( !isAuthenticated ) {
     dispatch({
       type: ADD_TO_BASKET,
@@ -113,7 +114,6 @@ export const addProductToBuscet = productToBuscet => (dispatch, getState) => {
       setTimeout(() => history.push('/'), 500);
 
     }).catch(err => {
-      console.log('nie dodalo', err);
     });
 };
 
