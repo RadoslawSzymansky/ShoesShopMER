@@ -133,6 +133,26 @@ router.patch('/users/favorites/:id', auth, (req, res, next) => {
   });
 });
 
+// update basket = concat basket
+
+router.patch('/users/basket/concat', auth, async (req, res, next) => {
+
+  const { localeBasket } = req.body;
+  console.log("typ localBasket in concat")
+  console.log(typeof localeBasket)
+
+  console.log("localBasket in concat")
+  console.log(req.body)
+
+  User.findById(req.user._id, 'productsInBuscet', (err, user) => {
+    if (err) return res.json({ msg: err });
+
+    user.productsInBuscet = [...user.productsInBuscet, ...localeBasket];
+
+    user.save();
+    res.json(user.productsInBuscet)
+  });
+})
 
 //  @ route /users PATCH // adding to buscet !
 

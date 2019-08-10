@@ -117,6 +117,24 @@ export const addProductToBuscet = productToBuscet => (dispatch, getState) => {
     });
 };
 
+export const connectBaskets = () => (dispatch, getState) => {
+  const localBasket = getState().user.basket;
+// / -----------------------------------------------
+
+
+
+  // STWORZYC REDUCER KTORY ZAKTUALIIZUJE BASKET O JUZ DZIALA?
+
+////
+  const config = tokenConfig(getState);
+  const body = { localeBasket: localBasket };
+  console.log('connect bakets akcja', body)
+  axios.patch('/users/basket/concat', body, config)
+    .then(res => {
+      console.log(res);
+    })
+}
+
 export const addToFavorites = favoriteProductId => (dispatch) => {
   const config = getConfig();
   const body = {
@@ -137,7 +155,7 @@ export const addToFavorites = favoriteProductId => (dispatch) => {
 export const removeFromBasket = productId => dispatch => {
   const config = getConfig();
   
-  axios.patch(`/users/basket/${productId}`, {}, config)
+  axios.patch(`/users/basket/${productId}`, config)
     .then(res => {
       dispatch({
         type: REMOVE_FROM_BASKET,

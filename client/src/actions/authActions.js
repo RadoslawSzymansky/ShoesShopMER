@@ -106,24 +106,20 @@ export const login = ({ email, password }) => (dispatch, getState) => {
   });
   axios.post('/users/login', body, config)
     .then(res => {
-      const basketProducts = getState().user.basket;
-      console.log('zalogowano w reducerze teraz probuje dodac do produktów', basketProducts)
-      
 
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
       });
-      basketProducts.forEach(product => {
-        console.log('dodaje do koszyka z poziomu login akcji')
-        store.dispatch(addProductToBuscet(product));
-      });
+    
     })
     .catch(err => {
+
       dispatch({
         type: LOGIN_FAIL
       });
       dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
+      
     });
 };
 
