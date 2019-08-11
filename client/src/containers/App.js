@@ -22,16 +22,13 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('update app')
     if (this.props.auth.isAuthenticated && !this.props.user.basket.length && !this.props.user.basketIsLoading ) {
-      console.log('1')
       store.dispatch(fetchBasket())
       this.props.fetchFavorites();
     }
      else if (this.props.auth.isAuthenticated !== prevProps.auth.isAuthenticated && prevProps.auth.isAuthenticated === false ) {
       // logowanie i gd jest wiecej niz w kloszyku 1
       store.dispatch(fetchBasket())
-      console.log('tylko przy logowanie');
       this.props.connectBaskets();
     }
   }
@@ -41,7 +38,6 @@ class App extends React.Component {
   } 
 
   render() {
-    console.log(this.props.user)
 
     return (
       <Router history={history}>

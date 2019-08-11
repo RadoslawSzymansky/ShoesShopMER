@@ -1,8 +1,9 @@
 import React from 'react';
+import BasketContainer from '../components/basket/BasketContainer';
 
 const UserBusket = props => {
   return (
-    <div>Buscet</div>
+    <BasketContainer/>
   );
 };
 

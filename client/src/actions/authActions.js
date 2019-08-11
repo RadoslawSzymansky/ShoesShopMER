@@ -13,7 +13,7 @@ import {
   REGISTER_FAIL
 } from '../actions/types';
 
-import { addProductToBuscet } from './userActions';
+import { cleanUserData } from './userActions';
 
 // Checking token & loading user
 
@@ -89,6 +89,8 @@ export const logout = () => (dispatch, getState) => {
       dispatch({
         type: LOGOUT_SUCCESS
       });
+      dispatch(cleanUserData());
+
     });
  
 };

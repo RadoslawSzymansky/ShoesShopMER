@@ -9,7 +9,8 @@ import {
   ADD_TO_BASKET,
   REMOVE_FROM_BASKET,
   REMOVE_FROM_FAVORITES,
-  ADD_TO_BASKET_REQUEST
+  ADD_TO_BASKET_REQUEST,
+  CLEAN_USER_DATA
 } from '../actions/types';
 
 const initialState = { 
@@ -105,6 +106,14 @@ export default function (state = initialState, action) {
         favorites: updatedFavorites
       };
     
+    case CLEAN_USER_DATA:
+      console.log('reducer czyszczenia')
+      return {
+        ...state,
+        basket: [],
+        favorites: []
+      };
+
     default:
       return state;
   };

@@ -12,7 +12,8 @@ import {
   REMOVE_FROM_BASKET,
   REMOVE_FROM_FAVORITES,
   BUY_PRODUCT_FAILED,
-  BUY_PRODUCT_SUCCESS
+  BUY_PRODUCT_SUCCESS,
+  CLEAN_USER_DATA
 } from './types'; 
 import history from '../history';
 
@@ -40,7 +41,7 @@ export const buyProduct = ({ id, size, count }) => dispatch => {
 
 export const fetchBasket = () => (dispatch, getState) => {
 
-  const config = tokenConfig(getState);
+  const config = getConfig(getState);
 
   dispatch({
     type: FETCH_BASKET_LOADING
@@ -175,4 +176,10 @@ export const removeFromFavorites = productId => dispatch => {
         payload: productId
       });
     });
+};
+
+export const cleanUserData = () => {
+  return {
+    type: CLEAN_USER_DATA
+  };
 };
