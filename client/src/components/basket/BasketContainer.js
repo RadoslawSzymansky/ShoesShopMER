@@ -9,8 +9,5 @@ const mapStateToProps = state => ({
   isLogin: state.auth.isAuthenticated
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchBasket: dispatch(fetchBasket( ))
-});
 
 export default connect(mapStateToProps, {fetchBasket})(Basket);

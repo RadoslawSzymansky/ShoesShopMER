@@ -14,6 +14,7 @@ import axios from 'axios';
 // na wszystkich na catch(err => dispatchEvent(err.resposne.data, err.response.status))
 
 export const fetchProduct = id => dispatch => {
+  // pobieranie 
   dispatch({
     type: FETCH_SHOE_LOADING,
     payload: id

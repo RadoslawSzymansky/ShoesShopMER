@@ -1,10 +1,10 @@
 import React from 'react';
+import BasketElement from './BasketElement';
 
 const BasketList = ({ list }) => {
-  console.log("lista", list)
   return (
     <>
-      {list.map(product => <p>product.pro</p>)}
+      {list.map(product => <BasketElement key={product.id} {...product}/>)}
     </>  
   );
 };
