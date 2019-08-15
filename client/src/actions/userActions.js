@@ -156,7 +156,7 @@ export const addToFavorites = favoriteProductId => (dispatch) => {
 export const removeFromBasket = productId => dispatch => {
   const config = getConfig();
   
-  axios.patch(`/users/basket/${productId}`, config)
+  axios.patch(`/users/basket/${productId}`,{}, config)
     .then(res => {
       dispatch({
         type: REMOVE_FROM_BASKET,

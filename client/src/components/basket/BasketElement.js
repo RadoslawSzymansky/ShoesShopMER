@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { fetchProduct } from '../../actions/shoesAction';
+import { removeFromBasket } from '../../actions/userActions';
+import shoeIMG from '../../images/shoe.png';
 
 const BaskeElement = props => {
 
@@ -9,14 +11,34 @@ const BaskeElement = props => {
     // dzieki temu bedzie pobierać elemnty i bd mogli sie z nich odwoływać
   }, []);
 
+  const handleRemove = () => {
+    props.removeFromBasket();
+  };
+
   const renderContent = () => {
 
     if(props.products[props.id]) {
-      const {productName} = props.products[props.id]
+      const {productName, price } = props.products[props.id];
+      const { size, count } = props;
       return (
-        <>
-          <li>{productName} {props.size}  {props.count}</li>
-        </>
+          <div class="item">
+            <div class="ui small image">
+              <img src={shoeIMG} alt="img" />
+            </div>
+            <div class="content">
+              <p>{productName}</p>
+              <div class="meta">
+                <span class="price">{price} zł</span>
+              </div>
+              <div class="description">
+                <p>Size <b>{size}</b></p>
+                <p>Count <b>{count}</b></p>
+              <div>
+                <button class="ui inverted red button" onClick={handleRemove}>Remove from basket</button>
+              </div>
+              </div>
+            </div>
+          </div>
       )
     } else {
       return 'Loading...'
@@ -26,7 +48,7 @@ const BaskeElement = props => {
 
   return (
     <>
-      <div class="ui olive segment">{renderContent()}</div>
+      {renderContent()}
     </>
   );
 };
@@ -36,7 +58,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = ( dispatch, ownProps ) => ({
-  fetchProduct: () => dispatch(fetchProduct(ownProps.id))
+  fetchProduct: () => dispatch(fetchProduct(ownProps.id)),
+  removeFromBasket: () => dispatch(removeFromBasket(ownProps.id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BaskeElement);
