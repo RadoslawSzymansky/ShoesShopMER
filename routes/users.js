@@ -114,10 +114,8 @@ router.patch('/users', auth, (req, res, next) => {
 //WORKING!
 router.patch('/users/favorites/:id', auth, (req, res, next) => {
   const id = req.params.id;
-
   User.findById(req.user.id, 'favorites', (err, user) => {
     if(err) return next(err);
-
     const index = user.favorites.findIndex(e => 
       String(e) === String(id)
     );
@@ -130,27 +128,29 @@ router.patch('/users/favorites/:id', auth, (req, res, next) => {
     
     user.save();
     res.json({ user });
+
   });
 });
 
 // update basket = concat basket
 
 router.patch('/users/basket/concat', auth, async (req, res, next) => {
+  console.log("localBasket request")
 
   const { localeBasket } = req.body;
-  console.log("typ localBasket in concat")
   console.log(typeof localeBasket)
 
-  console.log("localBasket in concat")
   console.log(req.body)
 
-  User.findById(req.user._id, 'productsInBuscet', (err, user) => {
+  User.findById(req.user._id, 'productsInBuscet',async (err, user) => {
     if (err) return res.json({ msg: err });
-
+    console.log("znalazlem uzytkownika")
     user.productsInBuscet = [...user.productsInBuscet, ...localeBasket];
 
-    user.save();
+    await user.save();
     res.json(user.productsInBuscet)
+    console.log("wysylam zlaczone", user.productsInBuscet)
+
   });
 })
 
@@ -180,12 +180,15 @@ router.patch('/users/basket/:id', auth, (req, res, next) => {
 // get Favorites
 
 router.get('/users/favorites', auth, async (req, res) => {
+  console.log("favorites dostalem")
 
   User.findById(req.user._id, 'favorites', (err, user) => {
 
     if (err) return res.json({ msg: err });
 
     res.json(user.favorites)
+    console.log("favorites wysylam")
+
   });
 });
 

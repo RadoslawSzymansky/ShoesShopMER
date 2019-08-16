@@ -2,10 +2,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
 const auth = async (req, res, next) => {
-  console.log(req.header('Authorization'))
-  console.log('w  auth middlewar  ')
   if (req.header('Authorization')) {
-    console.log('w ifie')
     const token = req.header('Authorization').replace('Bearer ', '')
 
     const data = jwt.verify(token, process.env.JWT_KEY)
@@ -18,12 +15,10 @@ const auth = async (req, res, next) => {
       }
       req.user = user
       req.token = token
-      console.log('w ifie po')
 
       next()
     } catch (error) {
 
-      console.log('jestem w catch')
       res.status(401).send({ error: 'Not authorized to access this resource' })
     }
   } else {

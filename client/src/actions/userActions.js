@@ -68,15 +68,18 @@ export const fetchFavorites = () => (dispatch, getState) => {
   dispatch({
     type: FETCH_FAVORITES_LOADING
   });
-
+  console.log("ackhja fetch fev")
   axios.get(`/users/favorites`, config)
     .then(res => {
+      console.log("favorites res", res)
       dispatch({
         type: FETCH_FAVORITES_SUCCESS,
         payload: res.data
       });
     })
     .catch(err => {
+      console.log("fail")
+
       dispatch({
         type: FETCH_FAVORITES_FAILED,
         payload: {
@@ -122,18 +125,17 @@ export const connectBaskets = () => (dispatch, getState) => {
   const localBasket = getState().user.basket;
 // / -----------------------------------------------
 
-
-
-  // STWORZYC REDUCER KTORY ZAKTUALIIZUJE BASKET O JUZ DZIALA?
-
 ////
   const config = tokenConfig(getState);
   const body = { localeBasket: localBasket };
   console.log('connect bakets akcja', body)
-  axios.patch('/users/basket/concat', body, config)
-    .then(res => {
-      console.log(res);
+  axios.patch('/users/basket/concat', body, config).then(res => {
+    dispatch({
+      type: FETCH_BASKET_SUCCESS,
+      payload: res.data
     })
+  })
+    
 }
 
 export const addToFavorites = favoriteProductId => (dispatch) => {

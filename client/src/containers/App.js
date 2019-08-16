@@ -22,13 +22,17 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.auth.isAuthenticated && !this.props.user.basket.length && !this.props.user.basketIsLoading ) {
+    if ( this.props.auth.isAuthenticated && !this.props.user.basketIsLoading && !this.props.user.basket.length) {
+      console.log('App update 1')
       store.dispatch(fetchBasket())
       this.props.fetchFavorites();
     }
-     else if (this.props.auth.isAuthenticated !== prevProps.auth.isAuthenticated && prevProps.auth.isAuthenticated === false ) {
+    else if (this.props.auth.isAuthenticated !== prevProps.auth.isAuthenticated && prevProps.auth.isAuthenticated === false && !this.props.user.basketIsLoading ) {
       // logowanie i gd jest wiecej niz w kloszyku 1
-      store.dispatch(fetchBasket())
+      console.log('App update 2')
+      this.props.fetchFavorites();
+
+
       this.props.connectBaskets();
     }
   }

@@ -1,16 +1,23 @@
 import React, {useEffect, useState } from 'react';
 import BasketList from './BasketList';
+import { Loader } from 'semantic-ui-react';
 
 const Basket = props => {
-  console.log(props)
   useEffect(() => {
-    console.log('pierwszy mount', props)
       props.fetchBasket()
   }, [])
 
+  const renderContent =() => {
+    if(props.basket.length) {
+      return <BasketList list={props.basket} />
+    }
+    if(!props.basket.length) {
+      return <Loader/>
+    }
+  }
   return (
     <>
-      {props.basket.length ? <BasketList list={props.basket} /> : 'Brak produktów w koszyku' }
+      {renderContent()}
     </>
   )
 };
