@@ -9,7 +9,12 @@ const Basket = props => {
 
   const renderContent =() => {
     if(props.basket.length) {
-      return <BasketList list={props.basket} />
+      return (
+        <>         
+          <button className='ui primary button'>Kup wszystko</button>
+          <BasketList list={props.basket} />
+        </>
+      )
     }
     if(!props.basket.length) {
       return <Loader/>

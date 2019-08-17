@@ -1,6 +1,7 @@
 
 const express = require('express');
 const User = require('../models/User');
+const Product = require('../models/Product');
 const auth = require('../middlewars/auth');
 
 const router = express.Router();
@@ -135,22 +136,15 @@ router.patch('/users/favorites/:id', auth, (req, res, next) => {
 // update basket = concat basket
 
 router.patch('/users/basket/concat', auth, async (req, res, next) => {
-  console.log("localBasket request")
 
   const { localeBasket } = req.body;
-  console.log(typeof localeBasket)
-
-  console.log(req.body)
 
   User.findById(req.user._id, 'productsInBuscet',async (err, user) => {
     if (err) return res.json({ msg: err });
-    console.log("znalazlem uzytkownika")
     user.productsInBuscet = [...user.productsInBuscet, ...localeBasket];
 
     await user.save();
     res.json(user.productsInBuscet)
-    console.log("wysylam zlaczone", user.productsInBuscet)
-
   });
 })
 
@@ -202,5 +196,31 @@ router.get('/users/basket', auth, async (req, res) => {
   });
 });
 
+
+// route   PUT  /api/users
+// desc     buy products from basket
+
+router.put('/users/basket/buy', auth, async (req, res) => {
+
+  try {
+
+    const user = await User.findById(req.user.id);
+    const purchasedHistory = user.purchasedHistory;
+    await user.productsInBuscet.forEach(async (item) => {
+
+      const product = await Product.findById(item.id);
+      product.inStore -= item.count;
+      await product.save();
+    })
+
+    user.purchasedHistory = purchasedHistory;
+    user.productsInBuscet = [];
+    await user.save();
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: error.message});
+  }
+});
 
 module.exports = router;

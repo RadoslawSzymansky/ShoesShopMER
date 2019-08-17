@@ -21,7 +21,7 @@ const BaskeElement = props => {
       const {productName, price } = props.products[props.id];
       const { size, count } = props;
       return (
-          <div class="item">
+          <div class="item" style={{maxWidth: 320, boxShadow: '0 0 5px 0 red', margin: 20}}>
             <div class="ui small image">
               <img src={shoeIMG} alt="img" />
             </div>
@@ -34,7 +34,7 @@ const BaskeElement = props => {
                 <p>Size <b>{size}</b></p>
                 <p>Count <b>{count}</b></p>
               <div>
-                <button class="ui inverted red button" onClick={handleRemove}>Remove from basket</button>
+                <button class="ui inverted red button" onClick={handleRemove}>Remove</button>
               </div>
               </div>
             </div>
